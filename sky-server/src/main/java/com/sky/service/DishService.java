@@ -1,6 +1,9 @@
 package com.sky.service;
 
 import com.sky.dto.DishDTO;
+import com.sky.entity.SetmealDish;
+
+import java.util.List;
 
 public interface DishService {
 
@@ -10,4 +13,10 @@ public interface DishService {
      */
     public void saveWithFlavor(DishDTO dishDTO);
 
+
+    /**
+     * 新增套餐内的菜品
+     * @param dishMeal
+     */
+    public void saveMealDish(List<SetmealDish> dishMeal);
 }

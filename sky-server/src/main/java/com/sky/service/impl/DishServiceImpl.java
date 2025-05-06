@@ -3,8 +3,10 @@ package com.sky.service.impl;
 import com.sky.dto.DishDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.SetmealDish;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
+import com.sky.mapper.DishMealMapper;
 import com.sky.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +24,10 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     DishFlavorMapper dishFlavorMapper;
+
+    @Autowired
+    DishMealMapper dishMealMapper;
+
     @Override
     /**
      * 新增菜品和口味
@@ -42,5 +48,14 @@ public class DishServiceImpl implements DishService {
             });
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+
+    /**
+     * 新增套餐中的菜品
+     * @param dishMeal
+     */
+    @Override
+    public void saveMealDish(List<SetmealDish> dishMeal) {
+        dishMealMapper.insertBatch(dishMeal);
     }
 }
