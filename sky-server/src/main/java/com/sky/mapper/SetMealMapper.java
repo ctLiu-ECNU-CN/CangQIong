@@ -1,11 +1,16 @@
 package com.sky.mapper;
 
 import com.sky.annotation.AutoFill;
+import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface SetMealMapper {
@@ -27,4 +32,18 @@ public interface SetMealMapper {
             "values(#{categoryId}, #{name}, #{price}, #{status}, #{description}, #{image}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})")
     @AutoFill(value = OperationType.INSERT)
     void insert(Setmeal setmeal);
+
+    /**
+     * 套餐 的分页查询 JDBC 上层执行语句
+     * @param dishPageQueryDTO
+     * @return
+     */
+
+    List<SetmealVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    Integer count();
+    /**
+     * 根据菜品 查询 套餐是否存在关系
+     */
+    List<Long> getSetmealIdsByDishIds(List<Long> dishIds);
 }

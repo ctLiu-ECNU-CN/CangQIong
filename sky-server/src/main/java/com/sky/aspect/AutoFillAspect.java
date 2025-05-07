@@ -61,9 +61,10 @@ public class AutoFillAspect {
                 setUpdateUser.invoke(entity, currentId);
             } catch (NoSuchMethodException e) {
 //                throw new RuntimeException(e);
-                log.error(e.getMessage());
+                log.error("自动填充出错：", e);
             } catch (Exception e) {
-                log.error(e.getMessage());
+                log.error("自动填充出错：", e);
+
             }
         } else if (type == OperationType.UPDATE) {
             try {
@@ -73,10 +74,10 @@ public class AutoFillAspect {
                 setUpdateTime.invoke(entity, localDateTime);
                 setUpdateUser.invoke(entity, currentId);
             } catch (NoSuchMethodException e) {
-                log.error(e.getMessage());
+                log.error("自动填充出错：", e);
 
             }catch(Exception e){
-                log.error(e.getMessage());
+                log.error("自动填充出错：", e);
             }
 
         }
