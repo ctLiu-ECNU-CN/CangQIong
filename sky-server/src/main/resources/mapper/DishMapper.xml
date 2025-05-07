@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into dish(name,
+                         category_id,
+                         price,
+                         image,
+                         description,
+                         status,
+                         create_time,
+                         update_time,
+                         create_user,
+                         update_user)
+        values (#{name},
+                #{categoryId},
+                #{price},
+                #{image},
+                #{description},
+                #{status},
+                #{createTime},
+                #{updateTime},
+                #{createUser},
+                #{updateUser})
+    </insert>
+    <delete id="deleteById">
+        delete from dish where id in
+         <foreach collection="ids" item="id" separator="," open="(" close=")">
+             #{id}
+         </foreach>
+    </delete>
+    <select id="page" resultType="com.sky.vo.DishVO">
+        select d.*,c.name as categoryName from dish as d left join category c on d.category_id = c.id
+        <where>
+            <if test = "categoryId != null">
+                and d.category_id = #{categoryId}
+            </if>
+            <if test = "name != null and name!=''">
+                and d.name like concat('%',#{name},'%')
+            </if>
+            <if test = "status != null">
+                and d.status = #{status}
+            </if>
+
+        </where>
+        order by c.update_time DESC
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from dish
+        <where>
+            <if test = "categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test = "name != null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test = "status != null">
+                and status = #{status}
+            </if>
+
+        </where>
+    </select>
+</mapper>
