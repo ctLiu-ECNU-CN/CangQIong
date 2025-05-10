@@ -59,9 +59,22 @@ public class DishController {
      */
     @ApiOperation(value = "查询菜品操作")
     @GetMapping("/{id}")
-    public Result<DishVO> update(@PathVariable Long id){
+    public Result<DishVO> getById(@PathVariable Long id){
         log.info("<根据id 查询菜品> id:{}",id);
         DishVO dishVO= dishService.getByIdWithFlavor(id);
         return Result.success(dishVO);
+    }
+
+    /**
+     * 修改菜品(不是只传 id,前端传来一个 DISHVO 实体
+     */
+    @ApiOperation(value = "修改菜品操作")
+    @PutMapping()
+    public Result update(@RequestBody DishDTO dishDTO){
+        log.info("<修改菜品>  dish:{}",dishDTO);
+//        操作两张表
+        dishService.update(dishDTO);
+
+        return Result.success();
     }
 }
