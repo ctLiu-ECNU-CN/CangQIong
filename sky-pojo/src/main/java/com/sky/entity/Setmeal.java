@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings({"all"})
 public class Setmeal implements Serializable {
 
     private static final long serialVersionUID = 1L;

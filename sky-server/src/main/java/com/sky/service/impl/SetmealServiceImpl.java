@@ -22,8 +22,8 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public class SetmealServiceImpl implements SetmealService {
 
+public class SetmealServiceImpl implements SetmealService {
     @Autowired
     DishMealMapper dishMealMapper;
 
