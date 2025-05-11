@@ -4,14 +4,12 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.dto.SetmealDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
-import com.sky.service.SetMealService;
+import com.sky.service.SetmealService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -19,13 +17,13 @@ import java.util.Map;
 @Api(tags = "套餐相关接口")
 public class MealController {
     @Autowired
-    SetMealService setMealService;
+    SetmealService setmealService;
 
     @PostMapping()
     @ApiOperation(value = "新增套餐")
     public Result setMeal(@RequestBody SetmealDTO setmealDTO) {
         log.info("<新增套餐>");
-        setMealService.updateMeal(setmealDTO);
+        setmealService.updateMeal(setmealDTO);
         return Result.success();
     }
 
@@ -41,7 +39,7 @@ public class MealController {
     @ApiOperation(value = "分页查询套餐")
     public Result<PageResult> list(@RequestParam DishPageQueryDTO dishPageQueryDTO) {
         log.info("<分页查询套餐>");
-        PageResult pageResult = setMealService.list(dishPageQueryDTO);
+        PageResult pageResult = setmealService.list(dishPageQueryDTO);
         return Result.success(pageResult);
     }
 }
