@@ -10,9 +10,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/dish")
@@ -22,11 +24,19 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+
+
     @PostMapping
     @ApiOperation(value = "新增菜品")
     public Result save(@RequestBody DishDTO dishDTO){
         log.info("<新增菜品>");
         dishService.saveWithFlavor(dishDTO);
+        //清理新增菜品 所属的 category 列表的缓存
+        String key = "dish_" + dishDTO.getCategoryId();
+        cleanCache(key);
         return Result.success();
     }
 
@@ -50,6 +60,7 @@ public class DishController {
     public Result delete(@RequestParam("ids") List<Long> ids){
         log.info("<批量删除菜品> ids:{}",ids);
         dishService.deleteBatch(ids);
+        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -74,7 +85,18 @@ public class DishController {
         log.info("<修改菜品>  dish:{}",dishDTO);
 //        操作两张表
         dishService.update(dishDTO);
-
+//
+        cleanCache("dish_*");
         return Result.success();
+    }
+
+    /**
+     * 按照模式匹配的串,清理相关缓存
+     * @param pattern String, 需要清理的数据的键值
+     */
+    private void cleanCache(String pattern){
+        log.info("<清理缓存> pattern:{}",pattern);
+        Set keys = redisTemplate.keys(pattern);
+        redisTemplate.delete(keys);
     }
 }
