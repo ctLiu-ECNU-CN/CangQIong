@@ -28,7 +28,24 @@ public class DishController {
     private RedisTemplate redisTemplate;
 
 
-
+    /**
+     * 设置菜品状态
+     * status:1 起售
+     * status:0 停售
+     * @return
+     */
+    @PostMapping("status/{status}")
+    @ApiOperation("设置菜品状态")
+    public Result dishSetStatus(@PathVariable Integer status, @RequestParam(name = "id") Long id) {
+        log.info("<设置菜品状态为>{}", status == 1?"<起售>":"<停售>");
+        dishService.setStatus(status, id);
+        return Result.success();
+    }
+    /**
+     * 新增菜品
+     * @param dishDTO
+     * @return
+     */
     @PostMapping
     @ApiOperation(value = "新增菜品")
     public Result save(@RequestBody DishDTO dishDTO){

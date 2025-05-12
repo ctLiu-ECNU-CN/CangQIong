@@ -185,4 +185,16 @@ public class DishServiceImpl implements DishService {
 
         return dishVOList;
     }
+
+    /**
+     * 设置菜品的状态
+     * @param status
+     */
+    @Override
+    public void setStatus(Integer status,Long id) {
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setStatus(status);
+        dishMapper.update(dish);
+    }
 }
