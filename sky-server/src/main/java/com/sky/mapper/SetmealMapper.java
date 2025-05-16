@@ -65,4 +65,6 @@ public interface SetmealMapper {
     List<DishItemVO> getDishItemBySetmealId(Long setmealId);
 
     void deleteById(List<Long> ids);
+
+    void updateStatus(Integer status, Long id);
 }

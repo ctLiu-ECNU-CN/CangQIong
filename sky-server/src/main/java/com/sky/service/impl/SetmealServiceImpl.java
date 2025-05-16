@@ -85,4 +85,9 @@ public class SetmealServiceImpl implements SetmealService {
     public void deleteBatch(List<Long> ids) {
         setmealMapper.deleteById(ids);
     }
+
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        setmealMapper.updateStatus(status,id);
+    }
 }

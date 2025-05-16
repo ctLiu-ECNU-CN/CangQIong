@@ -30,4 +30,6 @@ public interface SetmealService {
     List<DishItemVO> getDishItemById(Long id);
 
     void deleteBatch(List<Long> ids);
+
+    void startOrStop(Integer status, Long id);
 }
