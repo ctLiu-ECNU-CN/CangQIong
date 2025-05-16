@@ -59,4 +59,6 @@ public interface DishService {
      * @param status
      */
     void setStatus(Integer status, Long id);
+
+    List<DishVO> getByCategoryId(Long categoryId);
 }

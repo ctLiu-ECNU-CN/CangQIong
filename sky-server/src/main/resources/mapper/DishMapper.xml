@@ -89,4 +89,7 @@
 
         </where>
     </select>
+    <select id="getByCategoryId" resultType="com.sky.vo.DishVO">
+        select * from dish where category_id = #{categoryId}
+    </select>
 </mapper>

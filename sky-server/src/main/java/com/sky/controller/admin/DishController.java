@@ -107,6 +107,14 @@ public class DishController {
         return Result.success();
     }
 
+    @ApiOperation(value ="根据 categoryid 查询菜品分类")
+    @GetMapping("/list/{categoryId}")
+    public Result<List<DishVO>> list(@PathVariable Long categoryId){
+        log.info("<根据分类 id 查询菜品>  categoryId:{}",categoryId);
+        List<DishVO> dishVOList = dishService.getByCategoryId(categoryId);
+        return Result.success(dishVOList);
+    }
+
     /**
      * 按照模式匹配的串,清理相关缓存
      * @param pattern String, 需要清理的数据的键值
@@ -116,4 +124,6 @@ public class DishController {
         Set keys = redisTemplate.keys(pattern);
         redisTemplate.delete(keys);
     }
+
+
 }
