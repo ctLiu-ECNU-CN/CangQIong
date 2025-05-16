@@ -80,4 +80,9 @@ public class SetmealServiceImpl implements SetmealService {
     public List<DishItemVO> getDishItemById(Long id) {
         return setmealMapper.getDishItemBySetmealId(id);
     }
+
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        setmealMapper.deleteById(ids);
+    }
 }

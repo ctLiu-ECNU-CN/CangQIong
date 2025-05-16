@@ -9,7 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,6 +24,8 @@ public class MealController {
 
     @PostMapping()
     @ApiOperation(value = "新增套餐")
+//    精确清理 redis 缓存
+    @CacheEvict(cacheNames = "setmealCache",key = "#setmealDTO.categoryId")
     public Result setMeal(@RequestBody SetmealDTO setmealDTO) {
         log.info("<新增套餐>");
         setmealService.updateMeal(setmealDTO);
@@ -41,5 +46,13 @@ public class MealController {
         log.info("<分页查询套餐>");
         PageResult pageResult = setmealService.list(dishPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    @DeleteMapping
+    @ApiOperation("批量删除")
+    @CacheEvict(cacheNames = "setmealCache",key = )
+    public Result delete(@RequestParam List<Long> ids){
+        setmealService.deleteBatch(ids);
+        return Result.success();
     }
 }
