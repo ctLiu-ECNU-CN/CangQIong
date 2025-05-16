@@ -46,8 +46,15 @@ public class MealController {
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询套餐")
-    public Result<PageResult> list(@RequestParam DishPageQueryDTO dishPageQueryDTO) {
+    public Result<PageResult> list(@RequestParam Integer page, @RequestParam Integer pageSize,Integer status) {
         log.info("<分页查询套餐>");
+        DishPageQueryDTO dishPageQueryDTO = new DishPageQueryDTO();
+        dishPageQueryDTO.setPage(page);
+        dishPageQueryDTO.setPageSize(pageSize);
+        if (status != null) {
+            dishPageQueryDTO.setStatus(status);
+
+        }
         PageResult pageResult = setmealService.list(dishPageQueryDTO);
         return Result.success(pageResult);
     }

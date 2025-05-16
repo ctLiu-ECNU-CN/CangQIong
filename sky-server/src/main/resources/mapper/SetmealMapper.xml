@@ -31,7 +31,7 @@
 
     </select>
     <select id="count" resultType="java.lang.Integer">
-        select connt(*) from setmeal
+        select count(*) from setmeal
         <where>
             <if test = "categoryId != null">
                 and category_id = #{categoryId}
