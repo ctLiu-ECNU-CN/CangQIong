@@ -8,6 +8,7 @@ import com.sky.entity.SetmealDish;
 import com.sky.mapper.DishMealMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
+import com.sky.service.DishService;
 import com.sky.service.SetmealService;
 import com.sky.vo.DishItemVO;
 import com.sky.vo.SetmealVO;
@@ -29,6 +30,8 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     SetmealMapper setmealMapper;
+    @Autowired
+    private DishService dishService;
 
     @Override
     /**
@@ -89,5 +92,24 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public void startOrStop(Integer status, Long id) {
         setmealMapper.updateStatus(status,id);
+    }
+
+    /**
+     * 根据 id 查询菜品信息
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealVO getById(Long id) {
+        //查询套餐信息
+        Setmeal setmeal = setmealMapper.getById(id);
+        //查询套餐里所有菜品的信息
+        List<SetmealDish> dishList = setmealMapper.getDishById(setmeal.getId());
+
+        //构建 VO
+        SetmealVO setmealVO = new SetmealVO();
+        BeanUtils.copyProperties(setmeal, setmealVO);
+        setmealVO.setSetmealDishes(dishList);
+        return setmealVO;
     }
 }

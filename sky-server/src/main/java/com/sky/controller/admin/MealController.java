@@ -5,6 +5,7 @@ import com.sky.dto.SetmealDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
+import com.sky.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 @RestController
@@ -63,5 +65,12 @@ public class MealController {
     public Result startOrStop(@PathVariable Integer status, Long id){
         setmealService.startOrStop(status,id);
         return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据 id 查询套餐")
+    public Result<SetmealVO> getById(@PathVariable Long id){
+        SetmealVO meal = setmealService.getById(id);
+        return Result.success(meal);
     }
 }

@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Setmeal;
+import com.sky.entity.SetmealDish;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishItemVO;
 import com.sky.vo.SetmealVO;
@@ -64,7 +65,29 @@ public interface SetmealMapper {
             "where sd.setmeal_id = #{setmealId}")
     List<DishItemVO> getDishItemBySetmealId(Long setmealId);
 
+    /**
+     * 根据 id 删除
+     * @param ids
+     */
     void deleteById(List<Long> ids);
 
+    /**
+     * 设置套餐的状态
+     * @param status
+     * @param id
+     */
     void updateStatus(Integer status, Long id);
+
+    /**
+     * 根据 id 查询套餐
+     * @param id
+     * @return
+     */
+    Setmeal getById(Long id);
+
+    /**
+     * 根据 id 查询套餐里的菜品
+     * @return
+     */
+    List<SetmealDish> getDishById(Long setmealId);
 }
