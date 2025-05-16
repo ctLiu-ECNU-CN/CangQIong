@@ -108,8 +108,8 @@ public class DishController {
     }
 
     @ApiOperation(value ="根据 categoryid 查询菜品分类")
-    @GetMapping("/list/{categoryId}")
-    public Result<List<DishVO>> list(@PathVariable Long categoryId){
+    @GetMapping("/list")
+    public Result<List<DishVO>> list(@RequestParam Long categoryId){
         log.info("<根据分类 id 查询菜品>  categoryId:{}",categoryId);
         List<DishVO> dishVOList = dishService.getByCategoryId(categoryId);
         return Result.success(dishVOList);
