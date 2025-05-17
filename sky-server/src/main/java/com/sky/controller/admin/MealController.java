@@ -52,7 +52,7 @@ public class MealController {
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询套餐")
-    @Cacheable(cacheNames = "setmealCache" , value = "#categoryId")
+//    @Cacheable(cacheNames = "setmealCache" , key = "#status")
     public Result<PageResult> list(@RequestParam Integer page, @RequestParam Integer pageSize,Integer status) {
         log.info("<分页查询套餐>");
         DishPageQueryDTO dishPageQueryDTO = new DishPageQueryDTO();
@@ -84,7 +84,7 @@ public class MealController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据 id 查询套餐")
-    @Cacheable(cacheNames = "setmealCache",value = "#categoryId")
+    @Cacheable(cacheNames = "setmealCache",key = "#id")
     public Result<SetmealVO> getById(@PathVariable Long id){
         SetmealVO meal = setmealService.getById(id);
         return Result.success(meal);
