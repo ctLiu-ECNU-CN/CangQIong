@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface DishFlavorMapper {
 
-    //@AutoFill(value = OperationType.INSERT)
+//    @AutoFill(value = OperationType.INSERT)
     void insertBatch(List<DishFlavor> flavors);
 
     /**

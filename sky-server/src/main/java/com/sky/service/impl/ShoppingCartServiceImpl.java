@@ -39,6 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
         shoppingCart.setUserId(BaseContext.getCurrentId());
+        log.info("<当前用户>{}", BaseContext.getCurrentId());
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
         if(list != null && list.size() > 0) {
             // 存在数据,
