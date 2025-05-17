@@ -11,9 +11,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,12 +41,18 @@ public class MealController {
     @CacheEvict(cacheNames = "setmealCache",allEntries = true)//清除所有缓存
     public Result updateMeal(@RequestBody SetmealDTO setmealDTO) {
         log.info("<修改套餐>");
-//        setMealService.updateMeal(setmealDTO);
+        ArrayList<Long > ids = new ArrayList<>();
+        ids.add(setmealDTO.getId());
+        //TODO 删除套餐里的 dish 记录
+        //目前只删除了套餐表里的记录 还需删除套餐菜品表的记录
+        setmealService.deleteBatch(ids);
+        setmealService.updateMeal(setmealDTO);
         return Result.success();
     }
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询套餐")
+    @Cacheable(cacheNames = "setmealCache" , value = "#categoryId")
     public Result<PageResult> list(@RequestParam Integer page, @RequestParam Integer pageSize,Integer status) {
         log.info("<分页查询套餐>");
         DishPageQueryDTO dishPageQueryDTO = new DishPageQueryDTO();
@@ -77,6 +84,7 @@ public class MealController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据 id 查询套餐")
+    @Cacheable(cacheNames = "setmealCache",value = "#categoryId")
     public Result<SetmealVO> getById(@PathVariable Long id){
         SetmealVO meal = setmealService.getById(id);
         return Result.success(meal);
