@@ -53,6 +53,8 @@ public class MealController {
     @GetMapping("/page")
     @ApiOperation(value = "分页查询套餐")
 //    @Cacheable(cacheNames = "setmealCache" , key = "#status")
+    @Cacheable(cacheNames = "setmealCache", key = "'page_'+#page+'_'+#pageSize+'_'+#status")
+
     public Result<PageResult> list(@RequestParam Integer page, @RequestParam Integer pageSize,Integer status) {
         log.info("<分页查询套餐>");
         DishPageQueryDTO dishPageQueryDTO = new DishPageQueryDTO();

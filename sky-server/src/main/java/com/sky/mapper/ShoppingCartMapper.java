@@ -21,7 +21,7 @@ public interface ShoppingCartMapper {
      * 根据 id 更新数量
      * @param cart
      */
-    @Update("update shopping_cart set number = #{number} where user_id = #{userId}")
+    @Update("update shopping_cart set number = #{number} where id = #{id}")//fix 不能根据用户 id 查询,不然该用户所有的商品数量都会 更新
     void updateNumberById(ShoppingCart cart);
 
     /**

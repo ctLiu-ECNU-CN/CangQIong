@@ -45,6 +45,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             // 存在数据,
             //获取购物车数据,对应的菜品/套餐 数量+1
             ShoppingCart cart = list.get(0);
+
             cart.setNumber(cart.getNumber() + 1);
             //更新数据
             shoppingCartMapper.updateNumberById(cart);
@@ -67,9 +68,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }
             shoppingCart.setNumber(1);
             shoppingCart.setCreateTime(LocalDateTime.now());
-
+            //  fix 所有菜品数量都会+1
+            shoppingCartMapper.insert(shoppingCart);
         }
-        shoppingCartMapper.insert(shoppingCart);
+
 
     }
 
